@@ -14,9 +14,9 @@
 
 <resources>
     <string name="application_name">&TERMUX_APP_NAME;</string>
-    <string name="shared_user_label">&TERMUX_APP_NAME; user</string>
+    <string name="shared_user_label">ZeroTermux user</string>
 
-
+    <string name="app_name">ZeroTermux</string>
 
     <!-- Termux RUN_COMMAND permission -->
     <string name="permission_run_command_label">Run commands in &TERMUX_APP_NAME; environment</string>
@@ -295,7 +295,7 @@ error</string>
     <string name="自动出错">Automatic error</string>
     <string name="当前目录不在">The current directory is not</string>
     <string name="会话">Conversation</string>
-    <string name="自动命令">Autocommand</string>
+    <string name="自动命令">help</string>
     <string name="搜索文件">Search file</string>
     <string name="再次输入您要搜索的文件">Enter the file you want to search again</string>
     <string name="请输入您要查找的命令">Please enter the command you are looking for</string>
@@ -342,7 +342,7 @@ error</string>
     </string>
     <string name="版本">version</string>
     <string name="会话窗口在右侧">Tip: The session window is on the right side\nDouble-click the command window to open the shortcut command\nLicense: Learn to communicate</string>
-    <string name="开源地址">Open source address</string>
+    <string name="开源地址">Open source address \n thank</string>
     <string name="已打开开机启动命令">The boot command has been opened, restart the APP to take effect</string>
     <string name="已关闭开机启动命令">The boot command has been turned off and will take effect after restart</string>
     <string name="悬浮窗口">Floating window</string>
@@ -606,7 +606,7 @@ Reset successfully</string>
 
 
     <string name="可能检测到OTG设备">The OTG device may be detected, but the reading fails, please unplug the device and try again, or give permission to read OTG!</string>
-    <string name="检测到OTG设备">An OTG device is detected, and permission is about to be applied for [If the permission appears before this session window, it may be a system compatibility issue that can be ignored]</string>
+    <string name="检测到OTG设备">The OTG device is detected, and the OTG mapping directory will be created\n~/home/xinhaoLink/</string>
     <string name="下次提示">下次提示</string>
     <string name="如果下次想继续使用OTG设备">Next time prompt</string>
     <string name="OTG设备异常">
@@ -640,7 +640,7 @@ Reset successfully</string>
     <string name="获取线上">Get online</string>
     <string name="线上脚本">Online script</string>
     <string name="本地脚本">Local script</string>
-    <string name="请双击命令窗口试试">ZeroTermux\nPlease double-click the command window to try</string>
+    <string name="请双击命令窗口试试">ZeroTermux\nDouble-click the command window to open the shortcut bar\nDouble-click the far left/right to open the menu/session bar\nTwo finger click to open Toolbox</string>
     <string name="Zero论坛">Zero BBS</string>
     <string name="ZeroTermux论坛">ZeroTermux bbs</string>
 
@@ -690,4 +690,109 @@ Reset successfully</string>
         portable/external/removable sd card on your device.
         \nBootstrap binaries compiled for &TERMUX_APP_NAME; have hardcoded $PREFIX path and cannot be installed
         under any path other than:\n%1$s.</string>
+
+    <string name="title_share_selected_text">Terminal Text</string>
+    <string name="title_share_selected_text_with">Send selected text to:</string>
+    <string name="add_commend_msg_fail">"Can't add empty commands"</string>
+    <string name="add_commend_msg_ok">"The addition is successful. For details, please set the \"Command Definition\" function"</string>
+    <string name="tool_cent">Tool</string>
+    <string name="linux_commend">commend</string>
+    <string name="linux_clipboard">clipboard</string>
+    <string name="font_name">fontName:</string>
+    <string name="font_instance">fontInstance:</string>
+    <string name="font_path">fontPath:</string>
+    <string name="instance_zero">ZeroTermux|ABCD</string>
+
+    <string name="clipboard_text">Note: This clipboard will only record the content within the APP</string>
+    <string name="clipboard_title">Clipboard Title:</string>
+    <string name="clipboard_msg">Clipboard Msg:</string>
+    <string name="clipboard_note">delete</string>
+    <string name="clipboard_empty">no data</string>
+    <string name="clipboard_empty_copy">no data copy</string>
+    <string name="tool_other">other</string>
+    <string name="vedio_select_name">video back</string>
+    <string name="keyboard_select_name">keyboard</string>
+
+    <string name="image_size_error">file too large</string>
+
+    <string name="zero_eg_not_install">ZeroTermux Engine not install. Please download the engine at the download site</string>
+
+    <string name="install_environment">Install the required environment?</string>
+
+    <string name="x86_alpine_run">X86 Alpine</string>
+
+    <string name="clear_style_dialog">clear Style</string>
+
+    <string name="engine_vision">Engine</string>
+
+    <string name="engine_not_install">Not Install</string>
+
+    <string name="web_linux">Web Linux</string>
+
+    <string name="ttyd_install_complete">IP:0.0.0.0\nport:7681</string>
+
+    <string name="qq_group">copy qq number</string>
+
+    <string name="telegram_group">Telegram</string>
+
+    <string name="opne_in_zerotermux">Opne In Zerotermux</string>
+
+    <string name="move_file_to_zt">Copy File To ZeroTermux</string>
+
+    <string name="file_name_copy">FileMessage:{file}\n\nSize:{size}\n\nPath:{path}\n\nSuffix:{suffix}\n\ncopyPath:~</string>
+
+    <string name="copy_file_to_zt">copy is complete, the copy is in the path:"~"</string>
+
+    <string name="not_file_msg">File error, cannot be copied into ZeroTermux application!</string>
+
+    <string name="ttyd_install_msg">The current environment is not currently installed, please wait for the installation to complete [click this entry again]!</string>
+
+    <string name="ftp">FTP server</string>
+
+    <string name="storage_warning">Aviso: Almacenamiento no disponible. Puede que quieras desmontarlo.</string>
+
+    <string name="ftp_title">explanation</string>
+
+    <string name="ftp_msg">Click on this description to jump to the author github, thanks again to the author Pieter Pareit for the FTP core program\nThis FTP core is integrated by swiftp. \nAddress: https://github.com/ppareit/swiftp\nThe function can use FTP to upload files to Zero Home or SDCARD\nWhen changing the path to be accessed, the FTP service will be restarted\nBut changing the user name, password, The port needs to be manually restarted to take effect\nThe changed user name, password, and port data will be saved in real time</string>
+
+    <string name="ftp_error">The file has not been loaded or failed to read, please open it after loading or try again</string>
+
+    <string name="ftp_start_window">Jump to FTP</string>
+
+    <string name="ftp_prot_error">The currently selected port is occupied</string>
+
+    <string name="container_management">Container Management</string>
+
+    <string name="back_message">Please choose the following backup format, generally recommend "tar.gz" format</string>
+
+    <string name="storage_error">The "~/storage" directory is lost during the operation, please manually create termux-setup-storage or reopen "Container Management" to let the program create it automatically</string>
+
+    <string name="backup_success">The backup is complete, and the backup file is in ->internal storage/xinhao/data/|directory</string>
+
+    <string name="backup_msg_dialog">To start backing up the current container, the system needs to create a new session to perform the backup operation, click OK to continue</string>
+    <string name="delete_restore_data">delete</string>
+
+    <string name="ftp_port_msg">port out of range!</string>
+
+    <string name="data_file_name">Data Name:</string>
+    <string name="data_file_size">Data Size:</string>
+    <string name="data_file_path">Data Path:</string>
+    <string name="file_delete_msg">Are you sure you want to permanently delete this data file? There is no way to restore it after deletion.</string>
+    <string name="file_delete_fail">Unable to delete this file, please delete it manually in internal storage!</string>
+    <string name="file_sd_msg">The current program needs to create a memory card soft link, and needs to apply for SD card permission. If you refuse, you will not be able to use all the content in the container management!</string>
+    <string name="file_sd_fail">memory card permission is denied, this module cannot work, exit. . .</string>
+    <string name="file_sd_success">Permissions obtained successfully</string>
+    <string name="system_create_container">Create a recovered system container</string>
+    <string name="system_create_container_empty">System container name cannot be empty</string>
+    <string name="system_create_container_fail">System creation failed! Please try again</string>
+    <string name="system_restore_success">The system recovery is complete, please switch the system, switch your system</string>
+    <string name="unrecognized_compression_format">unrecognized packet!</string>
+    <string name="create_xinhao_path_fail">Failed to create ~/xinhaoLink folder, please create it manually!</string>
+    <string name="commonly_used_soft_links">Common shortcuts</string>
+    <string name="create_soft_links">The following shortcuts will be created:\nInternal storage WeChat, QQ, download directory\nInternal links: ~/xinhaoLink, due to Android 11+ restrictions /internal storage/Android/data/ directory access will not be created /internal storage/Android/data / Table of contents,But the program will still force the creation of</string>
+    <string name="create_soft_links_fail">Creation failed, please try again or manually create ~/xinhaoLink</string>
+    <string name="my_commonly_used_soft_links">custom shortcut</string>
+    <string name="my_commonly_used_soft_links_path">Enter the directory to link</string>
+    <string name="my_commonly_used_soft_links_repeat"> entered directory does not exist!</string>
+    <string name="action_share_selected_text">Share selected text</string>
 </resources>

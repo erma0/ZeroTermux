@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.TextView
 import com.blockchain.ub.util.custom.dialog.BaseDialogCentre
+import com.example.xh_lib.utils.UUtils
 import com.termux.R
 
 class SwitchDialog : BaseDialogCentre {
@@ -32,4 +33,17 @@ class SwitchDialog : BaseDialogCentre {
         return R.layout.dialog_switch
 
     }
+
+    public fun createSwitchDialog(msg: String): SwitchDialog {
+        title?.visibility = View.INVISIBLE
+        other?.visibility = View.GONE
+        ok?.text = UUtils.getString(R.string.确定)
+        cancel?.text = UUtils.getString(R.string.取消)
+        cancel?.setOnClickListener {
+            dismiss()
+        }
+        this.msg?.text = msg
+        return this
+    }
+
 }

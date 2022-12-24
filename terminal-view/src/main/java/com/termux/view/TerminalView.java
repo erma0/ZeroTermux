@@ -19,6 +19,7 @@ import android.view.HapticFeedbackConstants;
 import android.view.InputDevice;
 import android.view.KeyCharacterMap;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -30,6 +31,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.widget.Scroller;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.termux.terminal.KeyHandler;
@@ -468,6 +470,14 @@ public final class TerminalView extends View {
         if (mAccessibilityEnabled) setContentDescription(getText());
     }
 
+    /** This must be called by the hosting activity in {@link Activity#onContextMenuClosed(Menu)}
+     * when context menu for the {@link TerminalView} is started by
+     * {@link TextSelectionCursorController#ACTION_MORE} is closed. */
+    public void onContextMenuClosed(Menu menu) {
+        // Unset the stored text since it shouldn't be used anymore and should be cleared from memory
+        unsetStoredSelectedText();
+    }
+
     /**
      * Sets the text size, which in turn sets the number of rows and columns.
      *
@@ -569,13 +579,19 @@ public final class TerminalView extends View {
 
 
         //判断双击
-        if(event.getAction() == MotionEvent.ACTION_DOWN){
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
             if((System.currentTimeMillis() - doubleClick) < 260){
                 if(mDoubleClickListener != null){
                     mDoubleClickListener.doubleClicke(event.getX());
                 }
             }
             doubleClick = System.currentTimeMillis();
+        }
+        //判断双指单机
+        if (event.getAction() == MotionEvent.ACTION_POINTER_2_DOWN) {
+            if (mActionPointer2ClickListener != null) {
+                mActionPointer2ClickListener.pointer2Click();
+            }
         }
 
 
@@ -591,11 +607,14 @@ public final class TerminalView extends View {
                 if (action == MotionEvent.ACTION_DOWN) showContextMenu();
                 return true;
             } else if (event.isButtonPressed(MotionEvent.BUTTON_TERTIARY)) {
-                ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clipData = clipboard.getPrimaryClip();
+                ClipboardManager clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = clipboardManager.getPrimaryClip();
                 if (clipData != null) {
-                    CharSequence paste = clipData.getItemAt(0).coerceToText(getContext());
-                    if (!TextUtils.isEmpty(paste)) mEmulator.paste(paste.toString());
+                    ClipData.Item clipItem = clipData.getItemAt(0);
+                    if (clipItem != null) {
+                        CharSequence text = clipItem.coerceToText(getContext());
+                        if (!TextUtils.isEmpty(text)) mEmulator.paste(text.toString());
+                    }
                 }
             } else if (mEmulator.isMouseTrackingActive()) { // BUTTON_PRIMARY.
                 switch (event.getAction()) {
@@ -1215,6 +1234,10 @@ public final class TerminalView extends View {
         return getTextSelectionCursorController().hide();
     }
 
+    public TextSelectionCursorController getTextSelectionCursorControllerView() {
+        return getTextSelectionCursorController();
+    }
+
     private void renderTextSelection() {
         if (mTextSelectionCursorController != null)
             mTextSelectionCursorController.render();
@@ -1226,6 +1249,25 @@ public final class TerminalView extends View {
         } else {
             return false;
         }
+    }
+
+    /** Get the currently selected text if selecting. */
+    public String getSelectedText() {
+        if (isSelectingText() && mTextSelectionCursorController != null)
+            return mTextSelectionCursorController.getSelectedText();
+        else
+            return null;
+    }
+
+    /** Get the selected text stored before "MORE" button was pressed on the context menu. */
+    @Nullable
+    public String getStoredSelectedText() {
+        return mTextSelectionCursorController != null ? mTextSelectionCursorController.getStoredSelectedText() : null;
+    }
+
+    /** Unset the selected text stored before "MORE" button was pressed on the context menu. */
+    public void unsetStoredSelectedText() {
+        if (mTextSelectionCursorController != null) mTextSelectionCursorController.unsetStoredSelectedText();
     }
 
     private ActionMode getTextSelectionActionMode() {
@@ -1394,6 +1436,61 @@ public final class TerminalView extends View {
 
 
 
+    public void sendTextToTerminalAlt(CharSequence text, boolean isAlt) {
+        stopTextSelectionMode();
+        final int textLengthInChars = text.length();
+        for (int i = 0; i < textLengthInChars; i++) {
+            char firstChar = text.charAt(i);
+            int codePoint;
+            if (Character.isHighSurrogate(firstChar)) {
+                if (++i < textLengthInChars) {
+                    codePoint = Character.toCodePoint(firstChar, text.charAt(i));
+                } else {
+                    // At end of string, with no low surrogate following the high:
+                    codePoint = TerminalEmulator.UNICODE_REPLACEMENT_CHAR;
+                }
+            } else {
+                codePoint = firstChar;
+            }
+
+            // Check onKeyDown() for details.
+            if (mClient.readShiftKey())
+                codePoint = Character.toUpperCase(codePoint);
+
+            boolean ctrlHeld = false;
+            if (codePoint <= 31 && codePoint != 27) {
+                if (codePoint == '\n') {
+                    // The AOSP keyboard and descendants seems to send \n as text when the enter key is pressed,
+                    // instead of a key event like most other keyboard apps. A terminal expects \r for the enter
+                    // key (although when icrnl is enabled this doesn't make a difference - run 'stty -icrnl' to
+                    // check the behaviour).
+                    codePoint = '\r';
+                }
+
+                // E.g. penti keyboard for ctrl input.
+                ctrlHeld = true;
+                switch (codePoint) {
+                    case 31:
+                        codePoint = '_';
+                        break;
+                    case 30:
+                        codePoint = '^';
+                        break;
+                    case 29:
+                        codePoint = ']';
+                        break;
+                    case 28:
+                        codePoint = '\\';
+                        break;
+                    default:
+                        codePoint += 96;
+                        break;
+                }
+            }
+
+            inputCodePoint(KEY_EVENT_SOURCE_SOFT_KEYBOARD, codePoint, false, isAlt);
+        }
+    }
 
 
     public void sendTextToTerminalCtrl(CharSequence text, boolean isCtrl) {
@@ -1460,12 +1557,19 @@ public final class TerminalView extends View {
      */
 
     private  DoubleClickListener mDoubleClickListener;
+    private  ActionPointer2ClickListener mActionPointer2ClickListener;
     public void setDoubleClickListener(DoubleClickListener mDoubleClickListener){
         this.mDoubleClickListener = mDoubleClickListener;
+    }
+    public void setActionPointer2ClickListener(ActionPointer2ClickListener mActionPointer2ClickListener){
+        this.mActionPointer2ClickListener = mActionPointer2ClickListener;
     }
     public interface DoubleClickListener{
         void doubleClicke(float x);
 
+    }
+    public interface ActionPointer2ClickListener{
+        void pointer2Click();
     }
 
     public String getText555(){

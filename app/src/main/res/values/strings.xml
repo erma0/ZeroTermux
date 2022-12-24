@@ -4,8 +4,9 @@
 
 <resources>
     <string name="application_name">&TERMUX_APP_NAME;</string>
-    <string name="shared_user_label">&TERMUX_APP_NAME; 用户</string>
+    <string name="shared_user_label">ZeroTermux 用户</string>
 
+    <string name="app_name">ZeroTermux</string>
 
     <!-- Termux RUN_COMMAND permission -->
     <string name="permission_run_command_label">运行命令 &TERMUX_APP_NAME; 环境</string>
@@ -26,7 +27,7 @@
     <string name="action_new_session">新会话</string>
     <string name="action_new_session_failsafe">故障安全</string>
     <string name="title_max_terminals_reached">达到最大终端</string>
-    <string name="msg_max_terminals_reached">在创建新的之前关闭现有的。</string>
+    <string name="msg_max_terminals_reached">在创建新的之前关闭现有的,如果在备份或恢复当中请忽略。</string>
 
     <string name="title_rename_session">设置会话名称</string>
     <string name="action_rename_session_confirm">设置</string>
@@ -45,7 +46,7 @@
     <string name="title_select_url_none_found">在终端中找不到 URL。</string>
     <string name="msg_select_url_copied_to_clipboard">网址已复制到剪贴板</string>
 
-    <string name="action_share_transcript">分享成绩单</string>
+    <string name="action_share_transcript">分享终端内容</string>
     <string name="title_share_transcript">终端转录本</string>
     <string name="title_share_transcript_with">将成绩单发送至：</string>
 
@@ -54,7 +55,7 @@
     <string name="action_reset_terminal">重启</string>
     <string name="msg_terminal_reset">终端复位</string>
 
-    <string name="action_kill_process">杀死进程 (%d)</string>
+    <string name="action_kill_process">关闭当前终端 (%d)</string>
     <string name="title_confirm_kill_process">你确定杀死该会话?</string>
 
     <string name="action_style_terminal">样式</string>
@@ -276,7 +277,7 @@
     <string name="自动出错">自动出错</string>
     <string name="当前目录不在">当前目录不在</string>
     <string name="会话">会话</string>
-    <string name="自动命令">自动命令</string>
+    <string name="自动命令">帮助</string>
     <string name="搜索文件">搜索文件</string>
     <string name="再次输入您要搜索的文件">再次输入您要搜索的文件</string>
     <string name="请输入您要查找的命令">请输入您要查找的命令</string>
@@ -323,7 +324,7 @@
     </string>
     <string name="版本">版本</string>
     <string name="会话窗口在右侧">提示:会话窗口在右侧\n双击命令窗口打开快捷命令\n使用许可:学习交流</string>
-    <string name="开源地址">开源地址</string>
+    <string name="开源地址">开源地址\n鸣谢</string>
     <string name="已打开开机启动命令">已打开开机启动命令,重启APP生效</string>
     <string name="已关闭开机启动命令">已关闭开机启动命令,重启后生效</string>
     <string name="悬浮窗口">悬浮窗口</string>
@@ -573,10 +574,10 @@
     <string name="termux_terminal_view_view_header">视图</string>
 
     <!-- Terminal View Margin Adjustment -->
-    <string name="termux_terminal_view_terminal_margin_adjustment_title">终端保证金调整</string>
+    <string name="termux_terminal_view_terminal_margin_adjustment_title">终端距离调整</string>
     <string name="termux_terminal_view_terminal_margin_adjustment_off">
 终端保证金调整将被禁用。</string>
-    <string name="termux_terminal_view_terminal_margin_adjustment_on">将启用终端保证金调整。应该启用它以尝试修复软键盘覆盖部分额外键/终端视图的问题。如果它导致设备上的屏幕闪烁，请禁用它。 （默认）</string>
+    <string name="termux_terminal_view_terminal_margin_adjustment_on">将启用终端距离调整。应该启用它以尝试修复软键盘覆盖部分额外键/终端视图的问题。如果它导致设备上的屏幕闪烁，请禁用它。 （默认）</string>
     <string name="VSCODE">VSCODE</string>
     <string name="X86_Alpine">X86_Alpine</string>
     <string name="请在下载站下载Alpine插件">请在下载站下载Alpine插件</string>
@@ -584,7 +585,7 @@
 
 
     <string name="可能检测到OTG设备">可能检测到OTG设备,但是读取失败,请拔插设备再试,或者给予读取OTG权限!</string>
-    <string name="检测到OTG设备">检测到OTG设备,即将申请权限[如果权限出现在此会话窗口之前,可能是系统兼容性问题忽略即可]</string>
+    <string name="检测到OTG设备">检测到OTG设备,即将创建OTG映射目录\n~/home/xinhaoLink/</string>
     <string name="下次提示">下次提示</string>
     <string name="如果下次想继续使用OTG设备">如果下次想继续使用OTG设备,请退出APP重新进入,该提示会再次出现</string>
     <string name="OTG设备异常">
@@ -611,13 +612,13 @@
     <string name="termux_api_preferences_summary">偏好 &TERMUX_API_APP_NAME; 应用</string>
     <!-- TermuxService -->
     <string name="error_display_over_other_apps_permission_not_granted">&TERMUX_APP_NAME;
-        需要“在其他应用上显示”权限才能从 Android >= 10 的后台启动终端会话。从“设置”->“应用”-> 授予它 &TERMUX_APP_NAME; -> 先进的</string>
+        需要“在其他应用上显示”权限才能从 Android >= 10 的后台启动终端会话。从“设置”->“应用”-> 授予它 &TERMUX_APP_NAME; -> 选中</string>
     <string name="选择方式">选择方式</string>
     <string name="要获取最新版本">要获取最新版本，你需要在线下载，旧版本可以选择本地脚本</string>
     <string name="获取线上">获取线上</string>
     <string name="线上脚本">线上脚本</string>
     <string name="本地脚本">本地脚本</string>
-    <string name="请双击命令窗口试试">ZeroTermux\n请双击命令窗口试试</string>
+    <string name="请双击命令窗口试试">ZeroTermux\n双击命令窗口打开快捷栏\n双击最左/右打开菜单会话栏\n双指单击打开 工具箱</string>
     <string name="ZeroTermux论坛">ZeroTermux论坛</string>
     <string name="Zero论坛">Zero论坛</string>
 
@@ -666,5 +667,106 @@
         \nBootstrap binaries compiled for &TERMUX_APP_NAME; have hardcoded $PREFIX path and cannot be installed
         under any path other than:\n%1$s.</string>
 
+    <string name="title_share_selected_text">Terminal Text</string>
+    <string name="title_share_selected_text_with">Send selected text to:</string>
+    <string name="add_commend_msg_fail">"Can't add empty commands"</string>
+    <string name="add_commend_msg_ok">"The addition is successful. For details, please set the \"Command Definition\" function"</string>
+    <string name="tool_cent">工具箱</string>
+    <string name="linux_commend">常用命令</string>
+    <string name="linux_clipboard">剪贴板</string>
+    <string name="font_name">字体名称:</string>
+    <string name="font_instance">字体示例:</string>
+    <string name="font_path">字体路径:</string>
+    <string name="instance_zero">ZeroTermux|中文字体</string>
 
+    <string name="clipboard_text">注意：此剪贴板只会记录APP内的内容</string>
+    <string name="clipboard_title">剪贴板标题:</string>
+    <string name="clipboard_msg">剪贴板内容:</string>
+    <string name="clipboard_note">删除此记录</string>
+    <string name="clipboard_empty">剪贴板没有使用内容</string>
+    <string name="clipboard_empty_copy">复制内容不能为空噢</string>
+
+    <string name="tool_other">其他选项</string>
+
+    <string name="vedio_select_name">视频背景</string>
+    <string name="keyboard_select_name">内置键盘</string>
+
+    <string name="image_size_error">文件过大</string>
+
+    <string name="zero_eg_not_install">没有安装零引擎，请在下载站下载引擎 </string>
+
+    <string name="install_environment">安装所需环境?</string>
+
+    <string name="x86_alpine_run">X86 Alpine</string>
+
+    <string name="clear_style_dialog">清空美化</string>
+
+    <string name="engine_vision">引擎</string>
+
+    <string name="engine_not_install">未安装</string>
+
+    <string name="web_linux">浏览器终端</string>
+
+    <string name="ttyd_install_complete">IP:0.0.0.0\n端口:7681</string>
+
+    <string name="qq_group">复制群号</string>
+
+    <string name="telegram_group">Telegram</string>
+
+    <string name="opne_in_zerotermux">使用ZeroTermux打开</string>
+
+    <string name="move_file_to_zt">移动文件到Zero Termux</string>
+
+    <string name="file_name_copy">文件信息:{file}\n\n大小:{size}\n\n路径:{path}\n\n后戳名(文件类型):{suffix}\n\n复制路径:~</string>
+
+    <string name="copy_file_to_zt">复制完成，复制在路径在:"~"</string>
+
+    <string name="not_file_msg">文件错误，不能复制到ZeroTermux应用中!</string>
+
+    <string name="ttyd_install_msg">当前没有安装当前环境，请等待安装完成之后【再此点击此入口】!</string>
+
+    <string name="ftp">FTP服务</string>
+
+    <string name="storage_warning">警告：当前存储暂不可用，您可能需要取消挂载。</string>
+
+    <string name="ftp_title">说明</string>
+    <string name="ftp_port_msg">端口超出范围!</string>
+
+    <string name="ftp_msg">点击此段说明，跳转到作者github,再次鸣谢作者Pieter Pareit的FTP核心程序\n此FTP核心是由swiftp集成的。\n地址:https://github.com/ppareit/swiftp\n功能可以使用FTP上传文件到Zero Home或者SDCARD\n在更改需要访问的路径是会重启FTP服务\n但是更改用户名、密码、端口需要手动重启服务来生效\n更改用户名、密码、端口数据会实时保存</string>
+
+    <string name="ftp_error">文件未被加载或读取失败, 请加载后打开或重试</string>
+
+    <string name="ftp_start_window">跳转至FTP网页</string>
+
+    <string name="ftp_prot_error">当前所选端口被占用!</string>
+
+    <string name="container_management">容器管理</string>
+
+    <string name="back_message">请选择以下备份格式,一般推荐"tar.gz"格式</string>
+
+    <string name="storage_error">"~/storage"目录在操作过程中目录丢失，请手动termux-setup-storage创建或重新打开"容器管理"让程序自动创建</string>
+    <string name="backup_success">备份完成，备份文件在->内部存储/xinhao/data/|目录下</string>
+    <string name="backup_msg_dialog">开始备份当前容器,系统需要新建一个会话来进行备份操作,点击确定继续</string>
+    <string name="delete_restore_data">删除此数据包</string>
+    <string name="data_file_name">数据包名称:</string>
+    <string name="data_file_size">数据包大小:</string>
+    <string name="data_file_path">数据包路径:</string>
+    <string name="file_delete_msg">确定要永久删除此数据包？删除之后可没有办法恢复噢。</string>
+    <string name="file_delete_fail">无法删除此文件，请在内部存储手动删除!</string>
+    <string name="file_sd_msg">当前程序需要创建内存卡软链接,需要申请SD卡权限，如果拒绝则无法使用容器管理内所有内容!</string>
+    <string name="file_sd_fail">拒绝了内存卡权限,此模块无法工作,退出。。。</string>
+    <string name="file_sd_success">权限获取成功</string>
+    <string name="system_create_container">创建恢复的系统容器</string>
+    <string name="system_create_container_empty">系统容器名称不能为空</string>
+    <string name="system_create_container_fail">系统创建失败!请重试</string>
+    <string name="system_restore_success">系统恢复完成,请在切换系统，切换您的系统</string>
+    <string name="unrecognized_compression_format">不能识别的数据包!</string>
+    <string name="create_xinhao_path_fail">创建~/xinhaoLink文件夹失败，请手动创建!</string>
+    <string name="commonly_used_soft_links">常用快捷方式</string>
+    <string name="create_soft_links">将创建以下快捷方式:\n内部存储 微信、QQ、下载目录\n内部链接:~/xinhaoLink,由于Android 11+ 限制/内部存储/Android/data/ 目录访问将不能创建 /内部存储/Android/data/ 目录,但是程序还是会强制创建</string>
+    <string name="create_soft_links_fail">创建失败,请重新尝试一下也可以手动创建 ~/xinhaoLink</string>
+    <string name="my_commonly_used_soft_links">自定快捷方式</string>
+    <string name="my_commonly_used_soft_links_path">输入要链接的目录</string>
+    <string name="my_commonly_used_soft_links_repeat">输入的目录不存在!</string>
+    <string name="action_share_selected_text">分享选中文本</string>
 </resources>

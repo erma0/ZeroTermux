@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -52,6 +53,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.zip.GZIPInputStream;
 
 import androidx.annotation.LayoutRes;
@@ -273,6 +275,43 @@ public class UUtils {
         } else {
             return rvZeroAndDot(bd.multiply(bd1).setScale(scale, BigDecimal.ROUND_DOWN).toPlainString());
         }
+    }
+    public static void sleepIgnoreInterrupt(long millis) {
+        try {
+            Thread.sleep(millis);
+        } catch (InterruptedException ignored) {
+        }
+    }
+
+    public static String getFtpDate(long time) {
+        SimpleDateFormat df = createSimpleDateFormat();
+        return df.format(new Date(time));
+    }
+
+    /**
+     * Creates a SimpleDateFormat in the formatting used by ftp sever/client.
+     */
+    private static SimpleDateFormat createSimpleDateFormat() {
+        SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss", Locale.US);
+        df.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return df;
+    }
+
+    public static Date parseDate(String time) throws ParseException {
+        SimpleDateFormat df = createSimpleDateFormat();
+        return df.parse(time);
+    }
+
+    //获取版本号
+    public static String getVersionName(Context mContext) {
+        String versionName = "";
+        try {
+            PackageInfo packageInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
+            versionName = packageInfo.versionName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return versionName;
     }
 
     //除法
@@ -720,7 +759,7 @@ public class UUtils {
 
 
     public static String getFileString(File file){
-        UUtils.showLog("获取文件目录:" + file.getAbsolutePath());
+      //  UUtils.showLog("获取文件目录:" + file.getAbsolutePath());
         String txt = "";
 
         String temp = "";
@@ -743,7 +782,7 @@ public class UUtils {
             }
             bufferedReader.close();
 
-            Log.e("XINHAO_HAN", "onCreate: " + txt);
+           // Log.e("XINHAO_HAN", "onCreate: " + txt);
 
 
             return txt;
@@ -760,7 +799,7 @@ public class UUtils {
 
     }
 
-    public static void setFileString(File fileString,String msg){
+    public static void setFileString(File fileString, String msg){
 
 
         try {
@@ -770,7 +809,7 @@ public class UUtils {
             printWriter.close();
             //  Toast.makeText(getContext(), "OK", Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
-            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+          //  Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
 
@@ -805,7 +844,7 @@ public class UUtils {
     }
 
     //写出文件
-    public static void writerFileRawInput(File mFile,InputStream open) {
+    public static void writerFileRawInput(File mFile, InputStream open) {
         Log.e(LOG_TAG, "writerFileRawInput: start");
         try {
             int len = 0;
@@ -825,6 +864,37 @@ public class UUtils {
             open.close();
             fileOutputStream.close();
             Log.e(LOG_TAG, "writerFileRawInput: deon"  );
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "writerFileRawInput: " + e.toString() );
+            e.printStackTrace();
+        }
+
+    }
+
+    //写出文件
+    public static void writerFileInput(File mFile, InputStream open, WriterFileListener mWriterFileListener) {
+        Log.e(LOG_TAG, "writerFileRawInput: start");
+        try {
+            int len = 0;
+            byte[] lll = new byte[51200];
+            long schedule = 0;
+            if (!mFile.exists()) {
+                mFile.createNewFile();
+                Log.e(LOG_TAG, "writerFileRawInput: createNewFile");
+            }
+            FileOutputStream fileOutputStream = new FileOutputStream(mFile);
+
+            while ((len = open.read(lll)) != -1) {
+                fileOutputStream.write(lll,0,len);
+                schedule += lll.length;
+                mWriterFileListener.schedule(schedule, false);
+            }
+
+            fileOutputStream.flush();
+            open.close();
+            fileOutputStream.close();
+            mWriterFileListener.schedule(schedule, true);
+            Log.e(LOG_TAG, "writerFileRawInput: done"  );
         } catch (Exception e) {
             Log.e(LOG_TAG, "writerFileRawInput: " + e.toString() );
             e.printStackTrace();
@@ -876,11 +946,19 @@ public class UUtils {
         return uri;
     }
 
+    public static void startUrl(String url) {
+        Intent intent = new Intent();
+        intent.setData(Uri.parse(url));//Url 就是你要打开的网址
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        UUtils.getContext().startActivity(intent); //启动浏览器
+    }
+
     public static void chmod(File file){
 
         try {
             Os.chmod(file.getAbsolutePath(), 0700);
-        } catch (ErrnoException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -982,5 +1060,18 @@ public class UUtils {
         int blue = (color & 0x0000ff);
 
         return Color.argb( red , green , blue ,ap);
+    }
+
+    //处理shell文本
+    public static String arrayListToStringShell(ArrayList<String> list) {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            stringBuilder.append(list.get(i)).append(" ");
+        }
+        return stringBuilder.toString();
+    }
+
+    public static interface WriterFileListener {
+        void schedule(long l, boolean isEnd);
     }
 }

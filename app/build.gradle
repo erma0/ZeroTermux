@@ -85,6 +85,7 @@ android {
         implementation 'me.jahnen:libaums:0.8.0'
         implementation 'me.jahnen:libaums-httpserver:0.5.3'
         implementation 'me.jahnen:libaums-storageprovider:0.5.1'
+        implementation  'uk.co.alt236:usbdeviceenumerator:2.0.0'
 
         //webview框架
         implementation 'com.just.agentweb:agentweb:4.0.2'
@@ -93,18 +94,23 @@ android {
         //颜色取色器
         implementation 'com.github.rtugeek:colorseekbar:2.0.3'
 
-        //选取图片
-        implementation 'com.zzti.fengyongge:imagepicker:1.4.5'
+        //图片/视频选择器
+        implementation 'com.lcw.library:imagepicker:2.2.7'
 
         //glide
         implementation 'com.github.bumptech.glide:glide:4.8.0'
         annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+        //状态栏
+        //https://github.com/gyf-dev/ImmersionBar
+        implementation 'com.geyifeng.immersionbar:immersionbar:3.2.2'
 
         implementation 'com.mallotec.reb:plugin-locale:1.0.12'
         implementation "io.noties.markwon:core:$markwonVersion"
         implementation "io.noties.markwon:ext-strikethrough:$markwonVersion"
         implementation "io.noties.markwon:linkify:$markwonVersion"
         implementation "io.noties.markwon:recycler:$markwonVersion"
+
+        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
 
         implementation project(":terminal-view")
@@ -116,7 +122,7 @@ android {
         minSdkVersion project.properties.minSdkVersion.toInteger()
         targetSdkVersion project.properties.targetSdkVersion.toInteger()
         versionCode 117
-        versionName "0.118.22"
+        versionName "0.118.26"
 
         buildConfigField "String", "TERMUX_PACKAGE_VARIANT", "\"" + project.ext.packageVariant + "\""
         manifestPlaceholders.TERMUX_PACKAGE_NAME = "com.termux"
