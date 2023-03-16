@@ -24,8 +24,10 @@ import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -125,6 +127,7 @@ import com.termux.zerocore.dialog.SwitchDialog;
 import com.termux.zerocore.dialog.VNCConnectionDialog;
 import com.termux.zerocore.dialog.adapter.ItemMenuAdapter;
 import com.termux.zerocore.http.HTTPIP;
+import com.termux.zerocore.http_service.HttpServerManager;
 import com.termux.zerocore.otg.OTGManager;
 import com.termux.zerocore.popuwindow.MenuLeftPopuListWindow;
 import com.termux.zerocore.url.FileUrl;
@@ -144,6 +147,7 @@ import com.termux.zerocore.zero.engine.ZeroCoreManage;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -168,7 +172,7 @@ import java.util.Locale;
  * </ul>
  * about memory leaks.
  */
-public final class TermuxActivity extends AppCompatActivity implements ServiceConnection, View.OnClickListener, MenuLeftPopuListWindow.ItemClickPopuListener, TerminalView.DoubleClickListener {
+public final class TermuxActivity extends AppCompatActivity implements ServiceConnection, View.OnClickListener, MenuLeftPopuListWindow.ItemClickPopuListener, TerminalView.DoubleClickListener, View.OnFocusChangeListener {
 
     /**
      * The connection to the {@link TermuxService}. Requested in {@link #onCreate(Bundle)} with a call to
@@ -376,6 +380,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         initStatue();
         initColorConfig();
         initListener();
+        initScrollHandler();
+        testFun();
     }
 
 
@@ -1267,6 +1273,14 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         return false;
     }
 
+    @Override
+    public void onFocusChange(View view, boolean b) {
+        if (view == null) {
+            LogUtils.e(TAG, "onFocusChange view is null");
+            return;
+        }
+    }
+
     class TermuxActivityBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -1387,10 +1401,13 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
     private TextView telegram_group_tv;
     private TextView double_tishi;
     private TextView xue_hua_start;
+    private EditText mDataMessage;
+    private CardView mDataMessageCard;
     private FrameLayout xue_fragment;
     private LinearLayout online_sh;
     private LinearLayout beautify;
     private View back_color;
+    private View layout_menu;
     private ImageView back_img;
     private VideoView back_video;
 
@@ -1409,6 +1426,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         qq_group_tv = findViewById(R.id.qq_group_tv);
         zerotermux_bbs = findViewById(R.id.zerotermux_bbs);
         rongqi = findViewById(R.id.rongqi);
+        layout_menu = findViewById(R.id.layout_menu);
         back_res = findViewById(R.id.back_res);
         linux_online = findViewById(R.id.linux_online);
         qemu = findViewById(R.id.qemu);
@@ -1433,6 +1451,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         zt_title = findViewById(R.id.zt_title);
         msg_tv = findViewById(R.id.msg_tv);
         xue_fragment = findViewById(R.id.xue_fragment);
+        mDataMessage = findViewById(R.id.data_message);
+        mDataMessageCard = findViewById(R.id.data_message_card);
         xue_hua = findViewById(R.id.xue_hua);
         xue_hua_start = findViewById(R.id.xue_hua_start);
         termux_pl = findViewById(R.id.termux_pl);
@@ -1482,6 +1502,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
         yuyan.setOnClickListener(this);
         beautify.setOnClickListener(this);
         shiyan_fun.setOnClickListener(this);
+        mTerminalView.setOnFocusChangeListener(this);
         zt_title.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -1495,21 +1516,12 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
         mTerminalView.setDoubleClickListener(this);
         title_mb.setVisibility(View.GONE);
-
         String xieyi = SaveData.INSTANCE.getStringOther("xieyi");
-
-
         if(xieyi == null || xieyi.isEmpty() || xieyi.equals("def") ){
             ProtocolDialog protocolDialog = new ProtocolDialog(this);
-
             protocolDialog.show();
-
             protocolDialog.setCancelable(false);
         }
-
-
-
-
         getServiceVs();
         getDrawer().addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -1530,6 +1542,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
               //  title_mb.setVisibility(View.VISIBLE);
                 WindowUtils.setImmersionBar(TermuxActivity.this, 0.6f);
                 setEgInstallStatus();
+                layout_menu.setFocusable(true);
+                dataMessage();
             }
 
             @Override
@@ -1537,6 +1551,7 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                 WindowUtils.setImmersionBar(TermuxActivity.this, 0.1f);
               //  title_mb.setVisibility(View.GONE);
                 setEgInstallStatus();
+                layout_menu.setFocusable(false);
             }
 
             @Override
@@ -1544,8 +1559,32 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
 
             }
         });
-
         refStartCommandStat();
+    }
+
+    private void dataMessage() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String dataMessageFileString = FileIOUtils.INSTANCE.getDataMessageFileString();
+                if (dataMessageFileString != null && !(dataMessageFileString.trim().isEmpty())) {
+                   UUtils.getHandler().post(new Runnable() {
+                       @Override
+                       public void run() {
+                           mDataMessageCard.setVisibility(View.VISIBLE);
+                           mDataMessage.setText(UUtils.getString(R.string.data_message) + "\n\n" + dataMessageFileString);
+                       }
+                   });
+                } else {
+                    UUtils.getHandler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mDataMessageCard.setVisibility(View.GONE);
+                        }
+                    });
+                }
+            }
+        }).start();
     }
 
     private void setEgInstallStatus() {
@@ -1577,13 +1616,6 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             xue_fragment.removeAllViews();
             xue_fragment.addView(snowView);
         }
-
-
-
-
-
-
-
     }
 
 
@@ -3033,28 +3065,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
                     }
                 });
             }else{
-
             }
-
-
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
     }
-
-
-
 
     /**
      *
@@ -3062,15 +3075,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
      *
      *
      */
-
-
     private void isShow(){
-
         title_mb.setVisibility(View.GONE);
         getDrawer().close();
-
-
-
     }
 
     /**
@@ -3083,12 +3090,8 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
      */
 
     public void startHttp(String ip){
-
-
         String ip_save = SaveData.INSTANCE.getStringOther("ip_save");
-
         if(ip_save == null || ip_save.isEmpty() || ip_save.equals("def")){
-
             ArrayList<EditPromptBean.EditPromptData> arrayList = new ArrayList<>();
             EditPromptBean.EditPromptData editPromptData = new EditPromptBean.EditPromptData();
             editPromptData.setIp(ip);
@@ -3096,61 +3099,30 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             arrayList.add(editPromptData);
             EditPromptBean editPromptBean = new EditPromptBean();
             editPromptBean.setArrayList(arrayList);
-
-
             String s = new Gson().toJson(editPromptBean);
-
             UUtils.showLog("编辑框存入[第一次]:" + s);
-
             SaveData.INSTANCE.saveStringOther("ip_save",s);
-
-
         }else{
-
-
             try{
-
                 EditPromptBean editPromptBean = new Gson().fromJson(ip_save, EditPromptBean.class);
-
                 ArrayList<EditPromptBean.EditPromptData> arrayList = editPromptBean.getArrayList();
-
                 EditPromptBean.EditPromptData editPromptData = new EditPromptBean.EditPromptData();
                 editPromptData.setIp(ip);
                 editPromptData.setConnection(0);
                 arrayList.add(editPromptData);
-
                 ArrayList<EditPromptBean.EditPromptData> arrayList1 = UUUtils.removeDuplicate_2(arrayList);
-
                 editPromptBean.setArrayList(arrayList1);
-
                 String s = new Gson().toJson(editPromptBean);
-
                 UUtils.showLog("编辑框存入[多次]:" + s);
-
                 SaveData.INSTANCE.saveStringOther("ip_save",s);
-
-
-
             }catch (Exception e){
                 e.printStackTrace();
                   SaveData.INSTANCE.saveStringOther("ip_save","def");
             }
-
-
-
         }
-
-
-
-
         LoadingDialog loadingDialog = new LoadingDialog(TermuxActivity.this);
-
         loadingDialog.getMsg().setText(UUtils.getString(R.string.正在连接到自定义服务器));
-
         loadingDialog.show();
-
-
-
         new BaseHttpUtils().getUrl(ip + "/repository/main.json", new HttpResponseListenerBase() {
             @Override
             public void onSuccessful(@NotNull Message msg, int mWhat) {
@@ -3335,17 +3307,9 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
             case "2":
             default:
                 return Locale.SIMPLIFIED_CHINESE;
-
-
         }
-
-
     }
-
-
     private void initFiles(){
-
-
         File mainFile = new File(FileUrl.INSTANCE.getMainBinUrl());
         File openLeftFile = new File(FileUrl.INSTANCE.getOpenLeft());
         File openRigthFile = new File(FileUrl.INSTANCE.getOpenRight());
@@ -3378,5 +3342,44 @@ public final class TermuxActivity extends AppCompatActivity implements ServiceCo
           //  mOTGManager.initOtg(TermuxActivity.this, intent);
         }
     };
+
+    //监听菜单键
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_MENU)) {
+            if (getDrawer().isOpen()) {
+                getDrawer().closeDrawers();
+            } else {
+                getDrawer().openDrawer(Gravity.LEFT);
+            }
+            return false;
+        }else {
+            return super.onKeyDown(keyCode, event);
+        }
+    }
+
+    private void initScrollHandler(){
+        mDataMessage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //canScrollVertically()方法为判断指定方向上是否可以滚动,参数为正数或负数,负数检查向上是否可以滚动,正数为检查向下是否可以滚动
+                if (mDataMessage.canScrollVertically(1) || mDataMessage.canScrollVertically(-1)){
+                    v.getParent().requestDisallowInterceptTouchEvent(true);//requestDisallowInterceptTouchEvent();要求父类布局不在拦截触摸事件
+                    if (event.getAction() == MotionEvent.ACTION_UP){ //判断是否松开
+                        v.getParent().requestDisallowInterceptTouchEvent(false); //requestDisallowInterceptTouchEvent();让父类布局继续拦截触摸事件
+                    }
+                }
+                return false;
+            }
+        });
+
+    }
+    //测试方法
+    private void testFun() {
+        if (!HttpServerManager.isAlive()) {
+            HttpServerManager.startService(19953, "");
+        }
+
+    }
 
 }

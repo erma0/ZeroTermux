@@ -21,10 +21,8 @@ import com.termux.zerocore.activity.ImageActivity
 import com.termux.zerocore.bean.ItemMenuBean
 import com.termux.zerocore.data.CommendShellData
 import com.termux.zerocore.data.UsbFileData
-import com.termux.zerocore.dialog.CommonCommandsDialog
-import com.termux.zerocore.dialog.FtpWindowsDialog
-import com.termux.zerocore.dialog.SwitchDialog
-import com.termux.zerocore.dialog.YesNoDialog
+import com.termux.zerocore.dialog.*
+import com.termux.zerocore.dialog.CommonCommandsDialog.CommonCommandsDialogConstant.ITEM_CLICK_DATA_MSG
 import com.termux.zerocore.dialog.view_holder.ItemMenuViewHolder
 import com.termux.zerocore.keybord.KeyBordManage
 import com.termux.zerocore.url.FileUrl
@@ -43,6 +41,7 @@ import com.termux.zerocore.url.FileUrl.zeroTermuxSystem
 import com.termux.zerocore.url.FileUrl.zeroTermuxWebConfig
 import com.termux.zerocore.url.FileUrl.zeroTermuxWindows
 import com.termux.zerocore.utils.FileIOUtils
+import com.termux.zerocore.utils.PackageMsg
 import com.termux.zerocore.zero.engine.ZeroCoreManage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -187,6 +186,12 @@ class ItemMenuAdapter :RecyclerView.Adapter<ItemMenuViewHolder> {
                     yesNoDialog.dismiss()
                 }
                 yesNoDialog.show()
+            }
+            CommonCommandsDialog.CommonCommandsDialogConstant.ITEM_CLICK_DATA_MSG -> {
+                createDataMessage()
+            }
+            CommonCommandsDialog.CommonCommandsDialogConstant.ITEM_CLICK_UNINSTALL -> {
+                unInstallAll()
             }
         }
     }
@@ -411,6 +416,43 @@ class ItemMenuAdapter :RecyclerView.Adapter<ItemMenuViewHolder> {
                 })
         }
         switchDialog.show()
+    }
 
+    private fun unInstallAll() {
+        PackageMsg.unInstallALLApk(mContext as Activity)
+    }
+
+    private fun createDataMessage() {
+        val mingLShowDialog = MingLShowDialog(mContext!!)
+        mingLShowDialog.mTitleCard.visibility = View.GONE
+        mingLShowDialog.mSwitchCard.visibility = View.GONE
+        mingLShowDialog.edit_text.hint = UUtils.getString(R.string.data_message_hint)
+        val dataMessageFileString = FileIOUtils.getDataMessageFileString()
+        if (!(dataMessageFileString.isNullOrEmpty())) {
+            mingLShowDialog.edit_text.setText(dataMessageFileString)
+        }
+        mingLShowDialog.start.setOnClickListener {
+            if (mingLShowDialog.edit_text.text.isNullOrEmpty()) {
+                UUtils.showMsg(UUtils.getString(R.string.data_message_empty))
+            } else {
+                mingLShowDialog.dismiss()
+                //在手动关闭和意外关闭都会自动保存，所以此显示信息只是增加保存按钮的一个反馈信息
+                UUtils.showMsg(UUtils.getString(R.string.保存成功))
+            }
+        }
+        mingLShowDialog.setOnDismissListener {
+            val text = mingLShowDialog.edit_text.text
+            //设置自动保存，关闭Dialog之后也会自动保存
+            GlobalScope.launch {
+                withContext(Dispatchers.IO) {
+                    if (!text.isNullOrEmpty()) {
+                        FileIOUtils.saveDataMessageFileString(text.toString())
+                    } else {
+                        LogUtils.d(TAG, "data save is empty!")
+                    }
+                }
+            }
+        }
+        mingLShowDialog.show()
     }
 }
