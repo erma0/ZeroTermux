@@ -17,6 +17,7 @@
 -keep class **$$UploadListenerProxy{ *; }
 -keep class **$$DownloadGroupListenerProxy{ *; }
 -keep class **$$DGSubListenerProxy{ *; }
+-keep class com.hzy.lib7z.**{*;}
 -keepclasseswithmembernames class * {
     @Download.* <methods>;
     @Upload.* <methods>;
@@ -26,3 +27,12 @@
 # LocalePlugin 混淆规则
 -keep class com.mallotec.reb.localeplugin.** { *; }
 -dontwarn com.mallotec.reb.localeplugin.**
+
+-keep class com.termux.zerocore.ftp.new_ftp.** { *; }
+-dontwarn com.termux.zerocore.ftp.new_ftp.**
+
+-keep class org.apache.mina.** { *; }
+-dontwarn org.apache.mina.**
+
+-keep class org.apache.ftpserver.** { *; }
+-dontwarn org.apache.ftpserver.**

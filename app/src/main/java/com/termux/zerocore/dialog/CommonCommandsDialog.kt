@@ -1,7 +1,6 @@
 package com.termux.zerocore.dialog
 
 import android.content.Context
-import android.graphics.Color
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -12,6 +11,7 @@ import com.blockchain.ub.util.custom.dialog.BaseDialogDown
 import com.example.xh_lib.utils.UUtils
 import com.termux.R
 import com.termux.app.TermuxActivity
+import com.termux.view.zerotermux.SaveData
 import com.termux.zerocore.bean.ClipboardBean
 import com.termux.zerocore.bean.ItemMenuBean
 import com.termux.zerocore.dialog.adapter.CommonCommandsAdapter
@@ -35,6 +35,10 @@ class CommonCommandsDialog : BaseDialogDown {
         public val ITEM_CLICK_UNINSTALL = 1010
         public val ITEM_CLICK_INSTALL_MODULE = 1011
         public val ITEM_CLICK_DEF_BASH = 1012
+        public val ITEM_CLICK_BASH_CHANGE = 1013
+        public val ITEM_CLICK_START_MSG = 1014
+        public val ITEM_CLICK_DOCKER_CHECK = 1015
+        public val ITEM_CLICK_REMOTE_CONNECTION = 1016
     }
 
     private val CLIPBOARD_SELECT = 0
@@ -43,6 +47,7 @@ class CommonCommandsDialog : BaseDialogDown {
     private var recycler_view:RecyclerView? = null
     private var item_menu_rec:RecyclerView? = null
     private var clipboard_note:TextView? = null
+    private var prohibit_toolbox:TextView? = null
     private var clear_text:TextView? = null
     private var select_1_ll:LinearLayout? = null
     private var select_2_ll: LinearLayout? = null
@@ -72,6 +77,22 @@ class CommonCommandsDialog : BaseDialogDown {
         clipboard_container = mView.findViewById(R.id.clipboard_container)
         other_container = mView.findViewById(R.id.other_container)
         item_menu_rec = mView.findViewById(R.id.item_menu_rec)
+        prohibit_toolbox = mView.findViewById(R.id.prohibit_toolbox)
+        prohibit_toolbox?.setOnClickListener {
+            val switchDialog = SwitchDialog(mContext)
+            switchDialog.createSwitchDialog(UUtils.getString(R.string.rohibit_toolbox_msg))
+            switchDialog.show()
+            switchDialog.ok?.let {
+                it.text = UUtils.getString(R.string.rohibit_toolbox_select)
+                it.setOnClickListener {
+                    SaveData.saveData(SaveData.TOOL, "disable_display", UUtils.getContext())
+                    UUtils.showMsg(UUtils.getString(R.string.rohibit_toolbox_ok_))
+                    switchDialog.dismiss()
+                    dismiss()
+                }
+            }
+
+        }
 
     }
 
@@ -95,6 +116,25 @@ class CommonCommandsDialog : BaseDialogDown {
         mDefBash.isEg = false
         mDefBash.key = CommonCommandsDialogConstant.ITEM_CLICK_DEF_BASH
         mList.add(mDefBash)
+        /**
+         * 修改bash
+         */
+        var mChangBash: ItemMenuBean.Data = ItemMenuBean.Data()
+        mChangBash.title = UUtils.getString(R.string.changed_bash)
+        mChangBash.id = R.mipmap.bash_change
+        mChangBash.isEg = false
+        mChangBash.key = CommonCommandsDialogConstant.ITEM_CLICK_BASH_CHANGE
+        mList.add(mChangBash)
+
+        /**
+         * 修改欢迎语
+         */
+        var mChangStartMsg: ItemMenuBean.Data = ItemMenuBean.Data()
+        mChangStartMsg.title = UUtils.getString(R.string.start_msg)
+        mChangStartMsg.id = R.mipmap.start_msg_ico
+        mChangStartMsg.isEg = false
+        mChangStartMsg.key = CommonCommandsDialogConstant.ITEM_CLICK_START_MSG
+        mList.add(mChangStartMsg)
         /**
          * 视屏背景
          */
@@ -215,7 +255,29 @@ class CommonCommandsDialog : BaseDialogDown {
         mUnInstall.backColor = UUtils.getColor(R.color.color_8850b397)
         mUnInstall.key = CommonCommandsDialogConstant.ITEM_CLICK_UNINSTALL
         mList.add(mUnInstall)
+        /**
+         * 检查是否可以安装docker
+         *
+         */
+        var mDocker: ItemMenuBean.Data = ItemMenuBean.Data()
+        mDocker.title = UUtils.getString(R.string.docker_check)
+        mDocker.id = R.mipmap.docker
+        mDocker.isEg = false
+        mDocker.backColor = UUtils.getColor(R.color.color_8850b397)
+        mDocker.key = CommonCommandsDialogConstant.ITEM_CLICK_DOCKER_CHECK
+        mList.add(mDocker)
 
+        /**
+         * 远程连接
+         *
+         */
+        var mRemoteConnection: ItemMenuBean.Data = ItemMenuBean.Data()
+        mRemoteConnection.title = UUtils.getString(R.string.remote_connection)
+        mRemoteConnection.id = R.mipmap.yc_connect
+        mRemoteConnection.isEg = false
+        mRemoteConnection.backColor = UUtils.getColor(R.color.color_8850b397)
+        mRemoteConnection.key = CommonCommandsDialogConstant.ITEM_CLICK_REMOTE_CONNECTION
+        mList.add(mRemoteConnection)
 
 
         mItemMenuAdapter = ItemMenuAdapter(mList, mContext, this)
