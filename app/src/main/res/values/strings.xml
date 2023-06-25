@@ -431,7 +431,7 @@
          4.1.字体为Android默认字体,如使用其他字体请用户(使用ZeroTermux用户)承担所有风险以及法律责任。\n
          4.2.图标使用为阿里巴巴ICO公用图库，使用该图标的原则是学习与交流,并非商用,如有侵权立即删除。\n
         5.在本软件(ZeroTermux)内使用的的恢复包、数据包、zip包等都有使用风险，切全部都来源于互联网，请用户酌情使用,如有造成无法挽回的损失,请用户承担风险。\n
-        6.所有恢复包、数据包、zip包ZeroTermux不能控制其内容,如有包内侵权本软件作者不承担任何责任，均由恢复包、数据包、zip包制作者承担(tar.gz备份功能法律声明)。\n
+        6.所有恢复包、数据包、模块包、zip包ZeroTermux不能控制其内容,如有包内侵权本软件作者不承担任何责任，均由恢复包、数据包、zip包制作者承担(tar.gz备份功能法律声明)。\n
         7.感谢所有该项目所应用到功能的作者。\n
         8.使用ZeroTermux会有直接或间接的损害你的设备,如有造成无法挽回的损失由用户承担,本软件以及作者不承担任何法律等责任\n
 
@@ -618,7 +618,7 @@
     <string name="获取线上">获取线上</string>
     <string name="线上脚本">线上脚本</string>
     <string name="本地脚本">本地脚本</string>
-    <string name="请双击命令窗口试试">ZeroTermux\n双击命令窗口打开快捷栏\n双击最左/右打开菜单会话栏\n双指单击打开 工具箱</string>
+    <string name="请双击命令窗口试试">ZeroTermux\n双击命令窗口打开快捷栏\n双击最左(音量+按键)\n右(音量-按键)打开菜单/会话栏\n双指单击打开 工具箱\n右侧菜单打开内置文件浏览器</string>
     <string name="ZeroTermux论坛">ZeroTermux论坛</string>
     <string name="Zero论坛">Zero论坛</string>
 
@@ -659,7 +659,8 @@
     <string name="error_run_command_service_invalid_execution_command_runner">Invalid execution command runner to RunCommandService: `%1$s`</string>
     <string name="error_termux_service_unsupported_execution_command_shell_create_mode">Unsupported execution command shell create mode to TermuxService: `%1$s`</string>
     <string name="error_termux_service_execution_command_shell_name_unset">Shell name not set but `%1$s` shell create mode passed</string>
-    <string name="error_display_over_other_apps_permission_not_granted_to_start_terminal">&TERMUX_APP_NAME; requires
+    <string name="error_display_over_other_apps_permission_not_granted_to_start_terminal">&TERMUX_APP_NAME;
+        requires
         \"Display over other apps\" permission to start terminal sessions from background on Android >= 10.
         Grants it from Settings -> Apps -> &TERMUX_APP_NAME; -> Advanced</string>
     <string name="bootstrap_error_installed_on_portable_sd">&TERMUX_APP_NAME; cannot be installed on
@@ -671,7 +672,7 @@
     <string name="title_share_selected_text_with">Send selected text to:</string>
     <string name="add_commend_msg_fail">"Can't add empty commands"</string>
     <string name="add_commend_msg_ok">"The addition is successful. For details, please set the \"Command Definition\" function"</string>
-    <string name="tool_cent">工具箱</string>
+    <string name="tool_cent">工具箱(禁止弹出工具箱)</string>
     <string name="linux_commend">常用命令</string>
     <string name="linux_clipboard">剪贴板</string>
     <string name="font_name">字体名称:</string>
@@ -732,7 +733,7 @@
     <string name="ftp_title">说明</string>
     <string name="ftp_port_msg">端口超出范围!</string>
 
-    <string name="ftp_msg">点击此段说明，跳转到作者github,再次鸣谢作者Pieter Pareit的FTP核心程序\n此FTP核心是由swiftp集成的。\n地址:https://github.com/ppareit/swiftp\n功能可以使用FTP上传文件到Zero Home或者SDCARD\n在更改需要访问的路径是会重启FTP服务\n但是更改用户名、密码、端口需要手动重启服务来生效\n更改用户名、密码、端口数据会实时保存</string>
+    <string name="ftp_msg">核心根据apache改进而来，默认目录为本Linux目录\n此版本为2.0，修复了FTP连接异常问题，更换了核心,确保此功能稳定!</string>
 
     <string name="ftp_error">文件未被加载或读取失败, 请加载后打开或重试</string>
 
@@ -775,6 +776,7 @@
     <string name="data_message_empty">数据包简介不能为空</string>
     <string name="zero_uninstall">卸载</string>
     <string name="install_module">安装模块</string>
+    <string name="install_module_download">安装模块(下载模块)</string>
     <string name="install_module_message">注意:安装后不能卸载,只对当前容器生效(如果路径已经放入模块包但是不显示，请检查SD卡权限)</string>
     <string name="install_empty">内部存储/xinhao/module,没有模块包</string>
     <string name="install_message">控制台:\n开始安装模块</string>
@@ -798,4 +800,100 @@
     <string name="install_def_bash_msg_ok">默认启动文件恢复成功</string>
     <string name="install_def_bash_msg_error">默认启动文件恢复错误!!</string>
     <string name="install_def_bash_is_writer">确定要恢复到默认的系统启动脚本(bash.bashrc)? 操作无法更改!</string>
+    <string name="install_module_switch">您确定要安装此模块包?</string>
+    <string name="install_module_clear_tempmodule">清空临时文件夹出现异常,请手动删除~/tempmodule文件夹!</string>
+    <string name="edit_save">保存</string>
+    <string name="edit_cancel">取消</string>
+    <string name="changed_bash">编辑启动文件</string>
+    <string name="save_error_">保存失败</string>
+    <string name="save_ok_">保存成功,有些文件需要重启APP生效</string>
+    <string name="start_msg">修改欢迎语</string>
+    <string name="create_folder">创建文件夹</string>
+    <string name="rohibit_toolbox_msg">在你调整字体大小或三指截图的时候，可以选择禁止显示工具箱\n启用工具箱:[长按终端->启用工具箱]</string>
+    <string name="rohibit_toolbox_select">禁用显示</string>
+    <string name="rohibit_toolbox_ok_">已禁用显示,如要开启请:[长按终端->启用工具箱]</string>
+    <string name="module_un7z_">模块展开中...</string>
+    <string name="module_install_pro">正在处理命令:</string>
+    <string name="file_manager">文件管理</string>
+    <string name="select_session">切换会话</string>
+    <string name="http_folder">文件夹</string>
+    <string name="http_file">文件</string>
+    <string name="no_http_msg">似乎没有链接网络?请手动在浏览器打开本机IP:19956</string>
+    <string name="open_ttyd_http">网络终端(ttyd)</string>
+    <string name="open_file_http">网络文件</string>
+    <string name="buffer_size_key">缓冲大小</string>
+    <string name="auto_shell_key">自动终端</string>
+    <string name="startup_command_key">启动命令</string>
+    <string name="adb_command">ADB终端</string>
+    <string name="adb_tool">ADB工具箱</string>
+
+
+    <string name="notification_channel_foreground_service">前台服务</string>
+    <string name="notification_channel_attention">提示</string>
+    <string name="notification_ftp_start_error_title">FTP服务无法启动</string>
+    <string name="notification_ftp_start_errer_message">FTP服务无法启动，请检查网络、权限、运行模式</string>
+    <string name="item_charset_gbk">GBK(简体中文)</string>
+    <string name="item_charset_utf">UTF-8(默认)</string>
+    <string name="permission_write_external">请授权存储读写权限</string>
+    <string name="snackbar_action_goto">前往设置</string>
+    <string name="attention_ftp_is_running">需要先关闭FTP服务才可以修改设置</string>
+    <string name="attention_no_user_account">请添加一个账户或者使用匿名模式来打开FTP服务</string>
+    <string name="ftp_status_not_running">FTP服务没有运行</string>
+    <string name="ftp_status_running_head">FTP服务运行于</string>
+    <string name="attention_opening_ftp">正在打开FTP服务&#8230;</string>
+    <string name="attention_closing_ftp">正在关闭FTP服务&#8230;</string>
+    <string name="word_stop">停止</string>
+    <string name="ftp_title_no">ZeroTermux:FTP</string>
+    <string name="docker_check">Docker检查\n(ROOT)</string>
+    <string name="termux_copy_ll">复制文件到~</string>
+    <string name="termux_moudle_ll">安装模块包</string>
+    <string name="termux_targz_ll">安装恢复包</string>
+    <string name="termux_install_module_switch">确定要安装此模块?</string>
+
+    <string name="label_server_ip">输入要被远程机器的IP</string>
+    <string name="label_video_resolution">分辨率</string>
+    <string name="label_video_bitrate">传输质量</string>
+    <string name="label_x">x</string>
+    <string name="action_start">启动</string>
+    <string name="appswitch_button">=</string>
+    <string name="home_button">o</string>
+    <string name="back_button">v</string>
+    <string name="switch0">无控制（如果不需要远程设备控制，请选中此项）</string>
+    <string name="switch1">导航栏（如果远程设备没有屏幕导航栏，请选中此项）</string>
+    <string name="label_server_title">远程连接(BATE)</string>
+    <string name="ip_connect">0.0.0.0</string>
+    <string name="remote_connection">ADB远程连接(bate)</string>
+    <string name="press_again">再按一次退出</string>
+    <string name="adb_title_msg">正在连接...请勿多次点击\'启动\'！</string>
+    <string name="copy_uri_error">URI复制错误，请等待开发者修复...</string>
+
+
+    <string-array name="options_resolution_keys">
+        <item>1920x1080</item>
+        <item>1280x720</item>
+        <item>800x448</item>
+        <item>640x360</item>
+    </string-array>
+
+    <string-array name="options_resolution_values">
+        <item>1920,1080</item>
+        <item>1280,720</item>
+        <item>800,448</item>
+        <item>640,360</item>
+    </string-array>
+
+    <string-array name="options_bitrate_keys">
+        <item>6 Mbps</item>
+        <item>4 Mbps</item>
+        <item>2 Mbps</item>
+        <item>1 Mbps</item>
+    </string-array>
+
+    <integer-array name="options_bitrate_values">
+        <item>6144000</item>
+        <item>4096000</item>
+        <item>2048000</item>
+        <item>1024000</item>
+    </integer-array>
+
 </resources>

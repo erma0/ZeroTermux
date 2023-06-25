@@ -449,7 +449,7 @@ error</string>
          4.1. The font is the Android default font. If you use other fonts, please users (users using ZeroTermux) bear all risks and legal responsibilities. \n
          4.2. The icon is used as the public library of Alibaba ICO. The principle of using the icon is for learning and communication, not for commercial use. If there is any infringement, it will be deleted immediately. \n
         5. The recovery packages, data packages, zip packages, etc. used in this software (ZeroTermux) are all at risk. All of them are from the Internet. Please use it at your discretion. If any irreparable loss is caused, the user shall bear the risk. . \n
-        6. All recovery packages, data packages, and zip packages ZeroTermux cannot control their content. If there is any infringement in the package, the author of this software does not bear any responsibility, and the creator of the recovery package, data package, and zip package shall bear the responsibility (tar.gz backup function law statement). \n
+        6. All recovery packages, data packages,module packages, and zip packages ZeroTermux cannot control their content. If there is any infringement in the package, the author of this software does not bear any responsibility, and the creator of the recovery package, data package, and zip package shall bear the responsibility (tar.gz backup function law statement). \n
         7. Thanks to all the authors of the functions applied to this project. \n
         8.Using ZeroTermux will directly or indirectly damage your equipment. If there is any irreparable loss, the user shall bear the responsibility of the software and the author.\n"
 
@@ -640,7 +640,7 @@ Reset successfully</string>
     <string name="获取线上">Get online</string>
     <string name="线上脚本">Online script</string>
     <string name="本地脚本">Local script</string>
-    <string name="请双击命令窗口试试">ZeroTermux\nDouble-click the command window to open the shortcut bar\nDouble-click the far left/right to open the menu/session bar\nTwo finger click to open Toolbox</string>
+    <string name="请双击命令窗口试试">ZeroTermux\nDouble-click the command window to open the shortcut bar\nDouble-click the far left (volume + button)\nRight (volume-button) to open the menu/session bar\nTwo-finger click to open the toolbox\nThe right menu opens the built-in file browser device</string>
     <string name="Zero论坛">Zero BBS</string>
     <string name="ZeroTermux论坛">ZeroTermux bbs</string>
 
@@ -695,7 +695,7 @@ Reset successfully</string>
     <string name="title_share_selected_text_with">Send selected text to:</string>
     <string name="add_commend_msg_fail">"Can't add empty commands"</string>
     <string name="add_commend_msg_ok">"The addition is successful. For details, please set the \"Command Definition\" function"</string>
-    <string name="tool_cent">Tool</string>
+    <string name="tool_cent">Toolbox (prohibit ejecting toolbox)</string>
     <string name="linux_commend">commend</string>
     <string name="linux_clipboard">clipboard</string>
     <string name="font_name">fontName:</string>
@@ -753,7 +753,7 @@ Reset successfully</string>
 
     <string name="ftp_title">explanation</string>
 
-    <string name="ftp_msg">Click on this description to jump to the author github, thanks again to the author Pieter Pareit for the FTP core program\nThis FTP core is integrated by swiftp. \nAddress: https://github.com/ppareit/swiftp\nThe function can use FTP to upload files to Zero Home or SDCARD\nWhen changing the path to be accessed, the FTP service will be restarted\nBut changing the user name, password, The port needs to be manually restarted to take effect\nThe changed user name, password, and port data will be saved in real time</string>
+    <string name="ftp_msg">The core is improved according to apache, and the default directory is the Linux directory\nThis version is 2.0, which fixes the abnormal problem of FTP connection and replaces the core to ensure the stability of this function!</string>
 
     <string name="ftp_error">The file has not been loaded or failed to read, please open it after loading or try again</string>
 
@@ -801,6 +801,7 @@ Reset successfully</string>
     <string name="data_message_empty">Data Msg Not Empty</string>
     <string name="zero_uninstall">unInstall</string>
     <string name="install_module">Install Module</string>
+    <string name="install_module_download">Install Module(DownLoad Module)</string>
     <string name="install_module_message">Note: It cannot be uninstalled after installation, and it only takes effect for the current container (if the path has been put into the module package but it is not displayed, please check the SD card permission)</string>
     <string name="install_empty">sdcard/xinhao/module,no data</string>
     <string name="install_message">Console:\nStart installing modules</string>
@@ -824,4 +825,101 @@ Reset successfully</string>
     <string name="install_def_bash_msg_ok">The default startup file was restored successfully</string>
     <string name="install_def_bash_msg_error">default boot file restore error!!</string>
     <string name="install_def_bash_is_writer">Are you sure you want to revert to the default system startup script (bash.bashrc)? The action cannot be changed!</string>
+    <string name="install_module_switch">Are you sure you want to install this module pack?</string>
+    <string name="install_module_clear_tempmodule">An exception occurred when emptying the temporary folder, please manually delete the ~/tempmodule folder!</string>
+    <string name="edit_save">Save</string>
+    <string name="edit_cancel">Cancel</string>
+    <string name="changed_bash">edit startup file</string>
+    <string name="save_error_">save failed</string>
+    <string name="save_ok_">Saved successfully, some files need to restart APP to take effect</string>
+    <string name="start_msg">Modify greeting</string>
+    <string name="create_folder">create folder</string>
+    <string name="rohibit_toolbox_msg">When you adjust the font size or take a three-finger screenshot, you can choose to disable toolbox\nEnable toolbox: [long press the terminal -> enable toolbox]</string>
+    <string name="rohibit_toolbox_select">disable display</string>
+    <string name="rohibit_toolbox_ok_">The display is disabled, if you want to open it please: [long press the terminal -> enable toolbox]</string>
+    <string name="module_un7z_">Module Expanding...</string>
+    <string name="module_install_pro">processing command:</string>
+    <string name="file_manager">File Manager</string>
+    <string name="select_session">Select Session</string>
+    <string name="http_folder">folder</string>
+    <string name="http_file">file</string>
+    <string name="no_http_msg">It seems that there is no connection to the network? Please manually open the local IP: 19956 in the browser</string>
+    <string name="buffer_size_key">buffer_size</string>
+    <string name="auto_shell_key">auto_shell</string>
+    <string name="startup_command_key">startup_command</string>
+    <string name="open_ttyd_http">NetworkTerminal(ttyd)</string>
+    <string name="open_file_http">NetworkFiles</string>
+
+    <string name="adb_command">ADBCommand</string>
+    <string name="adb_tool">ADBTool</string>
+
+
+    <string name="notification_channel_foreground_service">Reception</string>
+    <string name="notification_channel_attention">hint</string>
+    <string name="notification_ftp_start_error_title">FTP service failed to start</string>
+    <string name="notification_ftp_start_errer_message">The FTP service cannot be started, please check the network, permissions, and operating mode</string>
+    <string name="item_charset_gbk">GBK(Simplified Chinese)</string>
+    <string name="item_charset_utf">UTF-8 (default)</string>
+    <string name="permission_write_external">Please authorize storage read and write permissions</string>
+    <string name="snackbar_action_goto">go to settings</string>
+    <string name="attention_ftp_is_running">You need to close the FTP service before you can modify the settings</string>
+    <string name="attention_no_user_account">Please add an account or use anonymous mode to open the FTP service</string>
+    <string name="ftp_status_not_running">FTP service is not running</string>
+    <string name="ftp_status_running_head">The FTP service runs on </string>
+    <string name="attention_opening_ftp">Opening FTP service&#8230;</string>
+    <string name="attention_closing_ftp">Shutting down the FTP service&#8230;</string>
+    <string name="word_stop">stop</string>
+    <string name="ftp_title_no">ZeroTermux:FTP</string>
+    <string name="docker_check">DockerCheck\n(ROOT)</string>
+    <string name="termux_copy_ll">copy</string>
+    <string name="termux_moudle_ll">install module</string>
+    <string name="termux_targz_ll">install data</string>
+    <string name="termux_install_module_switch">Make sure you want to install this module?</string>
+
+    <string name="label_server_ip">Remote Device IP address</string>
+    <string name="label_video_resolution">Resolution</string>
+    <string name="label_video_bitrate">Bitrate</string>
+    <string name="label_x">x</string>
+    <string name="action_start">Start</string>
+    <string name="appswitch_button">=</string>
+    <string name="home_button">o</string>
+    <string name="back_button">v</string>
+    <string name="switch0">No Control  (check this if remote device control is not required)</string>
+    <string name="switch1">Nav Bar  (check this if remote device does not have on-screen nav bar)</string>
+    <string name="press_again">Press again to exit</string>
+    <string name="label_server_title">label server(BATE)</string>
+    <string name="ip_connect">0.0.0.0</string>
+    <string name="remote_connection">ADB label server(bate)</string>
+    <string name="adb_title_msg">Connecting...Do not click \'Start\' more than once!</string>
+
+    <string-array name="options_resolution_keys">
+        <item>1920x1080</item>
+        <item>1280x720</item>
+        <item>800x448</item>
+        <item>640x360</item>
+    </string-array>
+
+    <string-array name="options_resolution_values">
+        <item>1920,1080</item>
+        <item>1280,720</item>
+        <item>800,448</item>
+        <item>640,360</item>
+    </string-array>
+
+    <string-array name="options_bitrate_keys">
+        <item>6 Mbps</item>
+        <item>4 Mbps</item>
+        <item>2 Mbps</item>
+        <item>1 Mbps</item>
+    </string-array>
+
+    <integer-array name="options_bitrate_values">
+        <item>6144000</item>
+        <item>4096000</item>
+        <item>2048000</item>
+        <item>1024000</item>
+    </integer-array>
+
+    <string name="copy_uri_error">URI duplication error, please wait for the developer to fix it...</string>
+
 </resources>

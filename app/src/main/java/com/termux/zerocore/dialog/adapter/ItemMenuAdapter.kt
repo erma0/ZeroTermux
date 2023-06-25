@@ -19,14 +19,17 @@ import com.hjq.permissions.Permission
 import com.hjq.permissions.XXPermissions
 import com.termux.R
 import com.termux.app.TermuxActivity
+import com.termux.zerocore.activity.EditTextActivity
 import com.termux.zerocore.activity.ImageActivity
 import com.termux.zerocore.bean.ItemMenuBean
+import com.termux.zerocore.code.CodeString
 import com.termux.zerocore.data.CommendShellData
 import com.termux.zerocore.data.UsbFileData
 import com.termux.zerocore.dialog.*
 import com.termux.zerocore.dialog.CommonCommandsDialog.CommonCommandsDialogConstant.ITEM_CLICK_DATA_MSG
 import com.termux.zerocore.dialog.view_holder.ItemMenuViewHolder
 import com.termux.zerocore.keybord.KeyBordManage
+import com.termux.zerocore.scrcpy.MainActivity
 import com.termux.zerocore.url.FileUrl
 import com.termux.zerocore.url.FileUrl.zeroTermuxApk
 import com.termux.zerocore.url.FileUrl.zeroTermuxCommand
@@ -196,7 +199,7 @@ class ItemMenuAdapter :RecyclerView.Adapter<ItemMenuViewHolder> {
                 unInstallAll()
             }
             CommonCommandsDialog.CommonCommandsDialogConstant.ITEM_CLICK_INSTALL_MODULE -> {
-                val installModuleDialog = InstallModuleDialog(mContext as Activity)
+                val installModuleDialog = com.zp.z_file.ui.dialog.InstallModuleDialog(mContext as Activity)
                 installModuleDialog.show()
                 installModuleDialog.setCancelable(false)
             }
@@ -220,6 +223,27 @@ class ItemMenuAdapter :RecyclerView.Adapter<ItemMenuViewHolder> {
                 }
                 switchDialog.show()
 
+            }
+
+            CommonCommandsDialog.CommonCommandsDialogConstant.ITEM_CLICK_BASH_CHANGE -> {
+                val intent = Intent(mContext, EditTextActivity::class.java)
+                intent.putExtra("edit_path", FileUrl.smsBashrcFile)
+                mContext?.startActivity(intent)
+            }
+
+            CommonCommandsDialog.CommonCommandsDialogConstant.ITEM_CLICK_START_MSG -> {
+                val intent = Intent(mContext, EditTextActivity::class.java)
+                intent.putExtra("edit_path", FileUrl.smsMotdFile)
+                mContext?.startActivity(intent)
+            }
+            CommonCommandsDialog.CommonCommandsDialogConstant.ITEM_CLICK_DOCKER_CHECK -> {
+                mCommonCommandsDialogDismissListener?.dismiss()
+                UUtils.writerFile("runcommand/check-config.sh", File(FileUrl.mainHomeUrl, "/check-config.sh"))
+                TermuxActivity.mTerminalView.sendTextToTerminal(CodeString.runDocker)
+            }
+            CommonCommandsDialog.CommonCommandsDialogConstant.ITEM_CLICK_REMOTE_CONNECTION -> {
+                val intent = Intent(mContext, MainActivity::class.java)
+                mContext?.startActivity(intent)
             }
         }
     }

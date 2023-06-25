@@ -15,6 +15,7 @@ object FileUrl {
 
     //主目录
     public val mainFilesUrl = TermuxConstants.TERMUX_FILES_DIR_PATH
+    public val mainAppUrl = TermuxConstants.TERMUX_INTERNAL_PRIVATE_APP_DATA_DIR_PATH
     public val mainHomeUrl = TermuxConstants.TERMUX_FILES_DIR_PATH + "/home"
     public val mainBinUrl = TermuxConstants.TERMUX_FILES_DIR_PATH + "/usr/bin"
     public val mainConfigUrl = TermuxConstants.TERMUX_FILES_DIR_PATH + "/home/.termux/"
@@ -75,6 +76,7 @@ object FileUrl {
     //系统启动脚本目录
     ///data/data/com.termux/files/usr/etc/bash.bashrc  .xinhao_history
     public val smsBashrcFile = "${TermuxConstants.TERMUX_FILES_DIR_PATH}/usr/etc/bash.bashrc"
+    public val smsMotdFile = "${TermuxConstants.TERMUX_FILES_DIR_PATH}/usr/etc/motd"
     //Zero系统脚本目录
     public val smsZeroBashrcFileD = "${TermuxConstants.TERMUX_FILES_DIR_PATH}/home/.xinhao_history"
     //Zero系统脚本
