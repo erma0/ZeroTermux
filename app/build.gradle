@@ -142,7 +142,7 @@ android {
         minSdkVersion project.properties.minSdkVersion.toInteger()
         targetSdkVersion project.properties.targetSdkVersion.toInteger()
         versionCode 117
-        versionName "0.118.36.2"
+        versionName "0.118.36"
 
         buildConfigField "String", "TERMUX_PACKAGE_VARIANT", "\"" + project.ext.packageVariant + "\""
         manifestPlaceholders.TERMUX_PACKAGE_NAME = "com.termux"
